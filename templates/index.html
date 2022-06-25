@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    {# jQuery #}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    {# bootstraps #}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    {# dataTable #}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+            src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+    {# font awesome #}
+    <script src="https://kit.fontawesome.com/33bea16cff.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block bootstrapInclude %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block body %}
+    <table id="table" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Pipi</th>
+            <th>Selles</th>
+            <th>Yeux</th>
+            <th>Nez</th>
+            <th>Peau</th>
+            <th>vitamine D</th>
+            <th>Bain</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for care in cares %}
+            {% if loop.first %}
+                <tr class="table-primary" id={{ care.id }}>
+                    {% else %}
+                <tr id={{ care.id }}>
+            {% endif %}
+        <td class="center">{{ care.date.strftime('%d / %m') }}</td>
+        <td class="center" data-name="pipi">{% if care.pipi %} <i class="fa-solid fa-check switchable"></i> {% else %}
+            <i class="fa-solid fa-xmark switchable"></i></i>{% endif %}</td>
+        <td class="center" data-name="selle">{% if care.selle %} <i class="fa-solid fa-check switchable"></i> {% else %}
+            <i class="fa-solid fa-xmark switchable"></i></i>{% endif %}</td>
+        <td class="center" data-name="yeux">{% if care.yeux %} <i class="fa-solid fa-check switchable"></i> {% else %}
+            <i class="fa-solid fa-xmark switchable"></i></i>{% endif %}</td>
+        <td class="center" data-name="nez">{% if care.nez %} <i class="fa-solid fa-check switchable"></i> {% else %}
+            <i class="fa-solid fa-xmark switchable"></i></i>{% endif %}</td>
+        <td class="center" data-name="peau">{% if care.peau %} <i class="fa-solid fa-check switchable"></i> {% else %}
+            <i class="fa-solid fa-xmark switchable"></i></i>{% endif %}</td>
+        <td class="center" data-name="vitamine_D">{% if care.vitamine_D %}
+            <i class="fa-solid fa-check switchable"></i> {% else %} <i class="fa-solid fa-xmark switchable"></i>
+            </i>{% endif %}</td>
+        <td class="center" data-name="bain">{% if care.bain %} <i class="fa-solid fa-check switchable"></i> {% else %}
+            <i class="fa-solid fa-xmark switchable"></i>{% endif %}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        $("i.switchable").on("click", function () {
+            var element = $(this).closest('td').attr("data-name");
+            var careId = $(this).closest('tr').attr('id');
+            $.ajax({
+                type: 'POST',
+                url: '/',
+                data: {
+                    element,
+                    careId
+                }
+            });
+        });
+    </script>
+{% endblock %}
