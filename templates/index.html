@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
+
     {# jQuery #}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     {# bootstraps #}
@@ -22,18 +23,22 @@
 
 {% block body %}
     <table id="table" class="table table-striped">
-        <thead>
+    <thead>
         <tr>
-            <th>Date</th>
-            <th>Pipi</th>
-            <th>Selles</th>
-            <th>Yeux</th>
-            <th>Nez</th>
-            <th>Peau</th>
-            <th>vitamine D</th>
-            <th>Bain</th>
+            <th class="tg-nrix" rowspan="2">Heure</th>
+            <th class="tg-baqh" colspan="2">Toilette</th>
+            <th class="tg-baqh" colspan="4">Soins</th>
+            <th class="tg-cly1" rowspan="2">Bain</th>
         </tr>
-        </thead>
+        <tr>
+            <th class="tg-baqh">Pipi</th>
+            <th class="tg-baqh">Selle</th>
+            <th class="tg-baqh">Yeux</th>
+            <th class="tg-baqh">Nez</th>
+            <th class="tg-baqh">Peau</th>
+            <th class="tg-baqh">Zyma-D</th>
+        </tr>
+    </thead>
         <tbody>
         {% for care in cares %}
             {% if loop.first %}
@@ -76,4 +81,15 @@
             });
         });
     </script>
+
+    <style type="text/css">
+        .tg  {border-collapse:collapse;border-spacing:0;}
+        .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+          overflow:hidden;padding:10px 5px;word-break:normal;}
+        .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
+          font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
+        .tg .tg-cly1{text-align:left;vertical-align:middle}
+        .tg .tg-baqh{text-align:center;vertical-align:top}
+        .tg .tg-nrix{text-align:center;vertical-align:middle}
+    </style>
 {% endblock %}
