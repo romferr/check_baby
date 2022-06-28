@@ -25,44 +25,60 @@
     <table id="table" class="table table-striped">
     <thead>
         <tr>
-            <th class="tg-nrix" rowspan="2">Heure</th>
-            <th class="tg-baqh" colspan="2">Toilette</th>
-            <th class="tg-baqh" colspan="4">Soins</th>
-            <th class="tg-cly1" rowspan="2">Bain</th>
+            <th class="align-middle text-center" rowspan="2">Date</th>
+            <th class="align-middle text-center" colspan="3" >Biberon</th>
+            <th class="text-center" colspan="2">Toilette</th>
+            <th class="text-center" colspan="4">Soins</th>
+            <th class="align-middle text-center" colspan="2">Bain</th>
+            <th class="align-middle text-center" rowspan="2">Commentaires</th>
         </tr>
         <tr>
-            <th class="tg-baqh">Pipi</th>
-            <th class="tg-baqh">Selle</th>
-            <th class="tg-baqh">Yeux</th>
-            <th class="tg-baqh">Nez</th>
-            <th class="tg-baqh">Peau</th>
-            <th class="tg-baqh">Zyma-D</th>
+            <th class="text-center">Heure</th>
+            <th class="text-center">Lait</th>
+            <th class="text-center">Eau</th>
+            <th class="text-center">Pipi</th>
+            <th class="text-center">Selle</th>
+            <th class="text-center">Yeux</th>
+            <th class="text-center">Nez</th>
+            <th class="text-center">Peau</th>
+            <th class="text-center">Zyma-D</th>
+            <th class="text-center">Eau</th>
+            <th class="text-center">Savon</th>
         </tr>
     </thead>
         <tbody>
-        {% for care in cares %}
+        {% for day in days %}
             {% if loop.first %}
-                <tr class="table-primary" id={{ care.id }}>
-                    {% else %}
-                <tr id={{ care.id }}>
+                <tr class="table-primary" id={{ day.id }}>
+            {% else %}
+                <tr id={{ day.id }}>
             {% endif %}
-        <td class="center">{{ care.date.strftime('%d / %m') }}</td>
-        <td class="center" data-name="pipi">{% if care.pipi %} <i class="fa-solid fa-check switchable"></i> {% else %}
-            <i class="fa-solid fa-xmark switchable"></i></i>{% endif %}</td>
-        <td class="center" data-name="selle">{% if care.selle %} <i class="fa-solid fa-check switchable"></i> {% else %}
-            <i class="fa-solid fa-xmark switchable"></i></i>{% endif %}</td>
-        <td class="center" data-name="yeux">{% if care.yeux %} <i class="fa-solid fa-check switchable"></i> {% else %}
-            <i class="fa-solid fa-xmark switchable"></i></i>{% endif %}</td>
-        <td class="center" data-name="nez">{% if care.nez %} <i class="fa-solid fa-check switchable"></i> {% else %}
-            <i class="fa-solid fa-xmark switchable"></i></i>{% endif %}</td>
-        <td class="center" data-name="peau">{% if care.peau %} <i class="fa-solid fa-check switchable"></i> {% else %}
-            <i class="fa-solid fa-xmark switchable"></i></i>{% endif %}</td>
-        <td class="center" data-name="vitamine_D">{% if care.vitamine_D %}
-            <i class="fa-solid fa-check switchable"></i> {% else %} <i class="fa-solid fa-xmark switchable"></i>
-            </i>{% endif %}</td>
-        <td class="center" data-name="bain">{% if care.bain %} <i class="fa-solid fa-check switchable"></i> {% else %}
-            <i class="fa-solid fa-xmark switchable"></i>{% endif %}</td>
-        </tr>
+
+            <td class="center text-center" rowspan={{ day.daily_cares|length }}>{{ day.date.strftime('%d / %m') }}</td>
+
+            {% for daily in day.daily_cares %}
+                <td class="center text-center">{{ day.date.strftime('%H:%M') }}</td>
+                <td class="center text-center" data-name="lait"></td>
+                <td class="center text-center" data-name="eau">{% if daily.type == "eau" %} {{ daily.ml }} ml{% endif %}</td>
+                <td class="center text-center" data-name="pipi">{% if daily.pipi %} <i class="fa-solid fa-check switchable"></i> {% else %}
+                    <i class="fa-solid fa-xmark switchable"></i></i>{% endif %}</td>
+                <td class="center text-center" data-name="selle">{% if daily.selle %} <i class="fa-solid fa-check switchable"></i> {% else %}
+                    <i class="fa-solid fa-xmark switchable"></i></i>{% endif %}</td>
+                <td class="center text-center" data-name="yeux">{% if daily.yeux %} <i class="fa-solid fa-check switchable"></i> {% else %}
+                    <i class="fa-solid fa-xmark switchable"></i></i>{% endif %}</td>
+                <td class="center text-center" data-name="nez">{% if daily.nez %} <i class="fa-solid fa-check switchable"></i> {% else %}
+                    <i class="fa-solid fa-xmark switchable"></i></i>{% endif %}</td>
+                <td class="center text-center" data-name="peau">{% if daily.peau %} <i class="fa-solid fa-check switchable"></i> {% else %}
+                    <i class="fa-solid fa-xmark switchable"></i></i>{% endif %}</td>
+                <td class="center text-center" data-name="vitamine_D">{% if daily.vitamine_D %}
+                    <i class="fa-solid fa-check switchable"></i> {% else %} <i class="fa-solid fa-xmark switchable"></i> </i>{% endif %}</td>
+                <td class="center text-center" data-name="bain">{% if daily.bain %} <i class="fa-solid fa-check switchable"></i> {% else %}
+                    <i class="fa-solid fa-xmark switchable"></i>{% endif %}</td>
+                <td class="center text-center" data-name="savon">{% if daily.bain %} <i class="fa-solid fa-check switchable"></i> {% else %}
+                    <i class="fa-solid fa-xmark switchable"></i>{% endif %}</td>
+                <td class="center text-center" data-name="comments"></td>
+                </tr>
+            {% endfor %}
         {% endfor %}
         </tbody>
     </table>
@@ -81,15 +97,4 @@
             });
         });
     </script>
-
-    <style type="text/css">
-        .tg  {border-collapse:collapse;border-spacing:0;}
-        .tg td{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-          overflow:hidden;padding:10px 5px;word-break:normal;}
-        .tg th{border-color:black;border-style:solid;border-width:1px;font-family:Arial, sans-serif;font-size:14px;
-          font-weight:normal;overflow:hidden;padding:10px 5px;word-break:normal;}
-        .tg .tg-cly1{text-align:left;vertical-align:middle}
-        .tg .tg-baqh{text-align:center;vertical-align:top}
-        .tg .tg-nrix{text-align:center;vertical-align:middle}
-    </style>
 {% endblock %}
